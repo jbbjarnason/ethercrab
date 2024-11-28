@@ -777,7 +777,7 @@ impl<'a, S> SubDeviceRef<'a, S> {
     }
 
     /// Get the sub device status.
-    pub(crate) async fn state(&self) -> Result<SubDeviceState, Error> {
+    pub async fn state(&self) -> Result<SubDeviceState, Error> {
         match self
             .read(RegisterAddress::AlStatus)
             .receive::<AlControl>(self.maindevice)
@@ -870,7 +870,8 @@ impl<'a, S> SubDeviceRef<'a, S> {
         Command::fprd(self.configured_address, register.into())
     }
 
-    pub(crate) async fn request_subdevice_state_nowait(
+    /// Request a state transition without waiting for it to complete.
+    pub async fn request_subdevice_state_nowait(
         &self,
         desired_state: SubDeviceState,
     ) -> Result<(), Error> {
